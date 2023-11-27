@@ -7,6 +7,66 @@
     android:background="#373F52"
     tools:context=".MainActivity">
 
+    <Button
+        android:id="@+id/reviewatutor"
+        android:layout_width="326dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="148dp"
+        android:layout_weight="1"
+        android:height="60dp"
+        android:background="#55a4b1"
+        android:drawableLeft="@drawable/reviewicon"
+        android:drawablePadding="6dp"
+        android:padding="6dp"
+        android:text="Review"
+        android:textColor="#0D47A1"
+        android:textStyle="bold"
+        app:backgroundTint="#55a4b1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/categories"
+        app:layout_constraintStart_toStartOf="@+id/categories"
+        app:layout_constraintTop_toBottomOf="@+id/categories"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/categories"
+        android:layout_width="326dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="25dp"
+        android:layout_weight="1"
+        android:height="60dp"
+        android:background="#55a4b1"
+        android:drawableLeft="@drawable/categoriesicon"
+        android:drawablePadding="6dp"
+        android:padding="6dp"
+        android:text="Tutoring Categories"
+        android:textColor="#0D47A1"
+        android:textStyle="bold"
+        app:backgroundTint="#55a4b1"
+        app:layout_constraintEnd_toEndOf="@+id/becomeatutor"
+        app:layout_constraintStart_toStartOf="@+id/becomeatutor"
+        app:layout_constraintTop_toBottomOf="@+id/becomeatutor" />
+
+    <Button
+        android:id="@+id/becomeatutor"
+        android:layout_width="326dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="25dp"
+        android:layout_weight="1"
+        android:height="60dp"
+        android:background="#55a4b1"
+        android:drawableLeft="@drawable/becomeicon"
+        android:drawablePadding="6dp"
+        android:padding="6dp"
+        android:text="Become A Tutor"
+        android:textColor="#0D47A1"
+        android:textStyle="bold"
+        app:backgroundTint="#55a4b1"
+        app:layout_constraintEnd_toEndOf="@+id/hireatutor"
+        app:layout_constraintStart_toStartOf="@+id/hireatutor"
+        app:layout_constraintTop_toBottomOf="@+id/hireatutor" />
+
     <TextView
         android:id="@+id/textView3"
         android:layout_width="90dp"
@@ -62,7 +122,7 @@
         app:layout_constraintVertical_bias="0.088" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/signout"
         android:layout_width="117dp"
         android:layout_height="50dp"
         android:backgroundTint="#55a4b1"
@@ -78,6 +138,7 @@
         android:id="@+id/imageButton7"
         android:layout_width="92dp"
         android:layout_height="69dp"
+        android:contentDescription="profile pic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.89"
@@ -87,23 +148,23 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
+        android:id="@+id/hireatutor"
         android:layout_width="326dp"
-        android:layout_height="81dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="136dp"
         android:layout_weight="1"
         android:height="60dp"
         android:background="#55a4b1"
-        android:backgroundTint="#55a4b1"
         android:drawableLeft="@drawable/hireicon"
         android:drawablePadding="6dp"
         android:padding="6dp"
         android:text="Hire A Tutor"
-        android:textColor="@color/white"
+        android:textColor="#0D47A1"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:backgroundTint="#55a4b1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.184" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
