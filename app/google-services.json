@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1007897271049",
+    "project_id": "pts-team7",
+    "storage_bucket": "pts-team7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1007897271049:android:9c3b11eaa440985b7251d8",
+        "android_client_info": {
+          "package_name": "com.example.pts"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKjdGNS2SQ8I0z5_tRICBTSg2KbiHWeUg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
