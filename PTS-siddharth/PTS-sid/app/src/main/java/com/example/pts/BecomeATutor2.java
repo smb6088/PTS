@@ -1,10 +1,16 @@
 package com.example.pts;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -33,10 +39,19 @@ public class BecomeATutor2 extends AppCompatActivity {
     CheckBox checkBox;
     Button buttonSubmit;
     DatabaseReference dataRef;
+    TextView charCount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_become_atutor2);
+
+        Toolbar top = findViewById(R.id.xml_top);
+        setSupportActionBar(top);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Select Category");
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.baseline_arrow_back_ios_new_24);
+
         agreedToTerms = false;
 
         Intent r_intent = getIntent();
@@ -48,6 +63,36 @@ public class BecomeATutor2 extends AppCompatActivity {
 
         checkBox = findViewById(R.id.checkBox);
         buttonSubmit = findViewById(R.id.buttonSubmit);
+
+        charCount = findViewById(R.id.charCount);
+
+        editTextBio.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+                String charCounter = String.valueOf(s.length());
+                charCounter += " / 160";
+                charCount.setText(charCounter);
+
+                if(s.length() >= 160)
+                {
+                    editTextBio.setError("Character limit reached!");
+                    editTextBio.requestFocus();
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -64,13 +109,37 @@ public class BecomeATutor2 extends AppCompatActivity {
             }
         });
 
-        buttonSubmit.setOnClickListener(new View.OnClickListener() {
+        buttonSubmit.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
-                if(agreedToTerms) {
-                    String price = editTextPrice.getText().toString();
-                    String location = editTextLocation.getText().toString();
-                    String bio = editTextBio.getText().toString();
+            public void onClick(View v)
+            {
+                String price = editTextPrice.getText().toString();
+                String location = editTextLocation.getText().toString();
+                String bio = editTextBio.getText().toString();
+
+                if(TextUtils.isEmpty(price))
+                {
+                    editTextPrice.setError("You did not set a price");
+                    editTextPrice.requestFocus();
+                }
+                else if(TextUtils.isEmpty(location))
+                {
+                    editTextLocation.setError("You did not set a location");
+                    editTextPrice.requestFocus();
+                }
+                else if(TextUtils.isEmpty(bio))
+                {
+                    editTextBio.setError("You did not write a biography");
+                    editTextBio.requestFocus();
+                }
+                else if(!agreedToTerms)
+                {
+                    Toast.makeText(BecomeATutor2.this, "You must agree to the terms to proceed", Toast.LENGTH_SHORT).show();
+                }
+                else if(agreedToTerms)
+                {
+                    
 
                     String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     dataRef = FirebaseDatabase.getInstance().getReference().child("Registered Users");
@@ -89,15 +158,27 @@ public class BecomeATutor2 extends AppCompatActivity {
                     finish();
 
                 }
-                else
-                {
-                    Toast.makeText(BecomeATutor2.this, "You must agree to the terms to proceed", Toast.LENGTH_SHORT).show();
-                }
+
 
 
             }
         });
 
 
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId()==android.R.id.home)
+        {
+            Intent intent = new Intent(BecomeATutor2.this, BecomeATutor1.class);
+            startActivity(intent);
+            finish();
+            return true;
+        }
+
+        else
+        {
+            return super.onOptionsItemSelected(item);
+        }
     }
 }

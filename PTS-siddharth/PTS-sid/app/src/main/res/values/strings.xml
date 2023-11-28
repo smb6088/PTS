@@ -2,4 +2,5 @@
     <string name="app_name">PTS</string>
     <string name="logo_image">logo_image</string>
     <string name="check">check</string>
+    <string name='back'>back</string>
 </resources>
