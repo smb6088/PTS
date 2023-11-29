@@ -3,33 +3,33 @@ package com.example.pts;
 public class tutorsearch_model {
 
 
-    String Name;
-    String Rating;
-    String Location;
-    String Bio;
+    static String name;
+    static String rating;
+    static String location;
+    String bio;
+    static String subject;
 
 
-    public tutorsearch_model(String bio,String name, String rating, String location) {
-        Name = name;
-        Rating = rating;
-        Location = location;
-        Bio = bio;
+    public tutorsearch_model(String bio,String name, String rating, String location,String subject) {
+        this.name = name;
+        this.rating = rating;
+        this.location = location;
+        this.subject = subject;
     }
 
-    public String getName() {
-        return Name;
+
+    public static String getName() {
+        return name;
+    }
+    public static String getSubject() {
+        return subject;
+    }
+    public static String getRating() {
+        return rating;
     }
 
-    public String getRating() {
-        return Rating;
+    public static String getLocation() {
+        return location;
     }
 
-    public String getLocation() {
-        return Location;
-    }
-
-    public String getBio()
-    {
-        return Bio;
-    }
 }

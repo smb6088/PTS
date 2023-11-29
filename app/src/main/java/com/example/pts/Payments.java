@@ -82,21 +82,21 @@ public class Payments extends AppCompatActivity {
         }
         else if(item.getItemId()==R.id.check)
         {
-            if(selectedItem.equals("Credit/Debit card")){
-                Intent s_intent = new Intent(Payments.this, HireaTutor2.class);
+            if(selectedItem.equals("Cash")){
+                Intent s_intent = new Intent(Payments.this, paymentscash.class);
                 s_intent.putExtra("mode", selectedItem);
                 startActivity(s_intent);
                 finish();
                 return true;
             }
-            else-if(selectedItem.equals("Credit/Debit card")) {
-            Intent s_intent = new Intent(Payments.this, HireaTutor2.class);
+            else if(selectedItem.equals("Credit/Debit card")) {
+            Intent s_intent = new Intent(Payments.this, Paymentscredit.class);
             s_intent.putExtra("mode", selectedItem);
             startActivity(s_intent);
             finish();
             return true;
-        }
-
+            }
+            return false;
         }
         else
         {
