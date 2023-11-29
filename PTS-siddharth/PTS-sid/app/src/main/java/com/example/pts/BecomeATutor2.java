@@ -149,9 +149,11 @@ public class BecomeATutor2 extends AppCompatActivity {
                     tutorDetails.put("Price", price);
                     tutorDetails.put("Location", location);
                     tutorDetails.put("Bio", bio);
+                    tutorDetails.put("IsHiredForCategory", false);
                     tutorDetails.put("Category", selectedCategory);
 
                     dataRef.child("Tutor Details").push().updateChildren(tutorDetails);
+                    dataRef.child("isATutor").setValue(true);
 
                     Intent intent = new Intent(BecomeATutor2.this, Dashboard.class);
                     startActivity(intent);

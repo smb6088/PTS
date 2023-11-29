@@ -7,6 +7,7 @@
     android:background="#373F52"
     tools:context=".HireaTutor2">
 
+
     <EditText
         android:id="@+id/editTextText"
         android:layout_width="248dp"
@@ -48,5 +49,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.098"
         app:srcCompat="@drawable/filtericon" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="369dp"
+        android:layout_height="596dp"
+        android:layout_marginTop="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextText"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
