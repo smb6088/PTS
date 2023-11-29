@@ -1,17 +1,19 @@
 package com.example.pts;
 
-public class TutorSearchModel
-{
+public class tutorsearch_model {
+
+
     String Name;
     String Rating;
     String Location;
+    String Bio;
 
 
-    public TutorSearchModel(String name, String rating, String location)
-    {
+    public tutorsearch_model(String bio,String name, String rating, String location) {
         Name = name;
         Rating = rating;
         Location = location;
+        Bio = bio;
     }
 
     public String getName() {
@@ -24,5 +26,10 @@ public class TutorSearchModel
 
     public String getLocation() {
         return Location;
+    }
+
+    public String getBio()
+    {
+        return Bio;
     }
 }

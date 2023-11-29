@@ -7,7 +7,6 @@
     android:background="#373F52"
     tools:context=".HireaTutor2">
 
-
     <EditText
         android:id="@+id/editTextText"
         android:layout_width="248dp"
@@ -51,13 +50,27 @@
         app:srcCompat="@drawable/filtericon" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="369dp"
-        android:layout_height="596dp"
+        android:id="@+id/tutorrecycler"
+        android:layout_width="373dp"
+        android:layout_height="414dp"
         android:layout_marginTop="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.421"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextText"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/payment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.931"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.954" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,6 +13,12 @@
         android:theme="@style/Theme.PTS"
         tools:targetApi="31">
         <activity
+            android:name=".Paymentscredit"
+            android:exported="false" />
+        <activity
+            android:name=".Payments"
+            android:exported="false" />
+        <activity
             android:name=".BecomeATutor2"
             android:exported="false" />
         <activity
