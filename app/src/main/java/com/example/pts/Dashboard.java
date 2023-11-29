@@ -31,6 +31,14 @@ public class Dashboard extends AppCompatActivity {
         hireatutor = findViewById(R.id.hireatutor);
         imageButton7 = findViewById(R.id.imageButton7);
 
+        becomeatutor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Dashboard.this, BecomeATutor1.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         signoutbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
