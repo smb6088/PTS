@@ -15,23 +15,22 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
-
 public class Payments extends AppCompatActivity {
 
     private ListView listviewCategories;
     ArrayList<String> list;
 
     String selectedItem;
+    String tutorID;
 
     ArrayAdapter arrAdapter;
-
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payments);
+
         Toolbar top;
         top = findViewById(R.id.xml_top);
         setSupportActionBar(top);
@@ -40,6 +39,7 @@ public class Payments extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.baseline_arrow_back_ios_new_24);
         Intent intent = getIntent();
+        tutorID = intent.getStringExtra("TUTORID");
 
 
         listviewCategories = findViewById(R.id.listviewCategories);
@@ -63,44 +63,42 @@ public class Payments extends AppCompatActivity {
             }
         });
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
         getMenuInflater().inflate(R.menu.top_menu, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId()==android.R.id.home)
-        {
+        if (item.getItemId() == android.R.id.home) {
             Intent intent = new Intent(Payments.this, Dashboard.class);
             startActivity(intent);
             finish();
             return true;
-        }
-        else if(item.getItemId()==R.id.check)
-        {
-            if(selectedItem.equals("Cash")){
+        } else if (item.getItemId() == R.id.check) {
+            if (selectedItem.equals("Cash")) {
                 Intent s_intent = new Intent(Payments.this, paymentscash.class);
                 s_intent.putExtra("mode", selectedItem);
+                s_intent.putExtra("TUTORID", tutorID);
                 startActivity(s_intent);
-                finish();
+                //finish();
+                return true;
+            } else if (selectedItem.equals("Credit/Debit card")) {
+                Intent s_intent = new Intent(Payments.this, Paymentscredit.class);
+                s_intent.putExtra("mode", selectedItem);
+                s_intent.putExtra("TUTORID", tutorID);
+                startActivity(s_intent);
+                //finish();
                 return true;
             }
-            else if(selectedItem.equals("Credit/Debit card")) {
-            Intent s_intent = new Intent(Payments.this, Paymentscredit.class);
-            s_intent.putExtra("mode", selectedItem);
-            startActivity(s_intent);
-            finish();
-            return true;
-            }
             return false;
-        }
-        else
-        {
+        } else {
             return super.onOptionsItemSelected(item);
         }
     }
+
+
+
+
 }

@@ -36,6 +36,7 @@ public class Login extends AppCompatActivity {
     Button buttonRegister;
     EditText emailText;
     EditText passwordText;
+    Button btnforgot;
     static final String TAG = "Login";
 
     @Override
@@ -49,6 +50,9 @@ public class Login extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         buttonLogin = findViewById(R.id.buttonLogin);
         buttonRegister = findViewById(R.id.buttonRegister);
+        btnforgot = findViewById(R.id.forgotpassword);
+
+
 
         authProfile = FirebaseAuth.getInstance();
 
@@ -81,6 +85,16 @@ public class Login extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(Login.this, Registration.class);
                 startActivity(intent);
+            }
+        });
+
+        btnforgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(Login.this, "You can reset your password now!",Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(Login.this, Forgotpassword.class);
+                startActivity(intent);
+
             }
         });
     }

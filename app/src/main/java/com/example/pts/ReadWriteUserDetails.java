@@ -7,7 +7,11 @@ public class ReadWriteUserDetails {
     public boolean isATutor;
     public int Rating;
     public String Location;
-    public ArrayList<String> prevHiredTutors;
+    //public ArrayList<String> prevHiredTutors;
+    public String prevHiredTutors;
+    public String teachingCategories;
+    public String teachingStudents;
+    public String reviews;
 
 
     public ReadWriteUserDetails(String FirstName, String LastName, String EmailAddress, String Phone, String Password, String PasswordHint){
@@ -19,8 +23,12 @@ public class ReadWriteUserDetails {
         this.PasswordHint = PasswordHint;
         isATutor = false;
         Rating = 0;
-        prevHiredTutors = new ArrayList<String>();
+        //prevHiredTutors = new ArrayList<String>();
+        prevHiredTutors = "";
         Location = null;
+        teachingCategories = "";
+        teachingStudents ="";
+        reviews = "";
     }
 
 }

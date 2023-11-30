@@ -51,6 +51,17 @@
         app:layout_constraintTop_toBottomOf="@+id/editPassword" />
 
     <Button
+        android:id="@+id/forgotpassword"
+        android:layout_width="177dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="48dp"
+        android:backgroundTint="#55a4b1"
+        android:text="Forgot Password?"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/buttonRegister"
+        app:layout_constraintStart_toStartOf="@+id/buttonRegister" />
+
+    <Button
         android:id="@+id/buttonRegister"
         android:layout_width="173dp"
         android:layout_height="48dp"
@@ -81,10 +92,10 @@
         android:layout_height="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.162"
+        app:layout_constraintHorizontal_bias="0.116"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.365"
+        app:layout_constraintVertical_bias="0.366"
         app:srcCompat="@drawable/emailicon" />
 
     <ImageView
@@ -93,7 +104,7 @@
         android:layout_height="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.162"
+        app:layout_constraintHorizontal_bias="0.116"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.48"
