@@ -27,11 +27,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class BecomeATutor2 extends AppCompatActivity {
+    String selectedCategory;
     EditText editTextPrice;
     EditText editTextLocation;
     EditText editTextBio;
@@ -40,6 +40,7 @@ public class BecomeATutor2 extends AppCompatActivity {
     Button buttonSubmit;
     DatabaseReference dataRef;
     TextView charCount;
+    String checkFlag;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,8 +56,8 @@ public class BecomeATutor2 extends AppCompatActivity {
         agreedToTerms = false;
 
         Intent r_intent = getIntent();
-        String temp = r_intent.getStringExtra("KEY_VALUE");
-
+        selectedCategory = r_intent.getStringExtra("KEY_VALUE");
+        checkFlag = r_intent.getStringExtra("ACTIVITY");
 
         editTextPrice = findViewById(R.id.editTextPrice);
         editTextLocation = findViewById(R.id.editTextLocation);
@@ -121,9 +122,7 @@ public class BecomeATutor2 extends AppCompatActivity {
                 FirebaseAuth auth = FirebaseAuth.getInstance();
                 FirebaseUser firebaseUser = auth.getCurrentUser();
                 String tutorid = firebaseUser.getUid().toString();
-                String rating = "0";
-                Intent r_intent = getIntent();
-                String temp = r_intent.getStringExtra("KEY_VALUE");
+
                 if(TextUtils.isEmpty(price))
                 {
                     editTextPrice.setError("You did not set a price");
@@ -145,21 +144,40 @@ public class BecomeATutor2 extends AppCompatActivity {
                 }
                 else if(agreedToTerms)
                 {
-                    addtutor(tutorid,price,location, rating, bio, temp);
                     
-                    /*
+
                     String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                    dataRef = FirebaseDatabase.getInstance().getReference().child("Tutors");
+                    dataRef = FirebaseDatabase.getInstance().getReference().child("Registered Users");
                     dataRef = dataRef.child(userID);
+                    /*
                     Map<String, Object> tutorDetails = new HashMap<String, Object>();
 
                     tutorDetails.put("Price", price);
                     tutorDetails.put("Location", location);
                     tutorDetails.put("Bio", bio);
+                    tutorDetails.put("IsHiredForCategory", false);
                     tutorDetails.put("Category", selectedCategory);
 
                     dataRef.child("Tutor Details").push().updateChildren(tutorDetails);
                     */
+
+                    dataRef.child("isATutor").setValue(true);
+                    dataRef.child("Location").setValue(location);
+
+                    addtutor(tutorid,price,bio,selectedCategory);
+
+                    if(checkFlag.equals("Categories")) {
+                        DatabaseReference dataRefCategories = FirebaseDatabase.getInstance().getReference().child("Tutoring Categories");
+                        Map<String, Object> addCategory = new HashMap<>();
+                        addCategory.put(selectedCategory, "");
+                        dataRefCategories.updateChildren(addCategory);
+                    }
+
+
+                    Intent intent = new Intent(BecomeATutor2.this, Dashboard.class);
+                    startActivity(intent);
+                    finish();
+
                 }
 
 
@@ -184,14 +202,12 @@ public class BecomeATutor2 extends AppCompatActivity {
             return super.onOptionsItemSelected(item);
         }
     }
-
-
-    public void addtutor( String tutorid,String price, String location, String rating, String bio, String subject)
+    public void addtutor( String tutorid,String price,String bio, String subject)
     {
 
         //UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(FirstName).build();
         //firebaseUser.updateProfile(profileChangeRequest);
-        tutorDetails tutordetails = new tutorDetails(tutorid, price,location,rating,bio, subject);
+        tutorDetails tutordetails = new tutorDetails(tutorid, price,bio, subject);
         DatabaseReference referenceProfile = FirebaseDatabase.getInstance().getReference("Tutor Details");
         String id = referenceProfile.push().getKey();
         referenceProfile.child("ListofTutors").child(id).setValue(tutordetails).addOnCompleteListener(new OnCompleteListener<Void>() {

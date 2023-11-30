@@ -33,23 +33,26 @@ public class BecomeATutor1 extends AppCompatActivity {
     ArrayList<String> list;
     ArrayAdapter arrAdapter;
     Button buttonNext;
-    String checkFlag;
     //ImageButton imageButtonNext;
     String selectedItem;
+    String checkFlag;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_become_atutor1);
+
         Toolbar top = findViewById(R.id.xml_top);
+
         Intent intent = getIntent();
         checkFlag = intent.getStringExtra("flags");
+
         setSupportActionBar(top);
         ActionBar actionBar = getSupportActionBar();
         if(checkFlag.equals("become")) {
             actionBar.setTitle("Select Category");
         }
         else {
-            actionBar.setTitle("Hire A Tutor");
+            actionBar.setTitle("Hire in Category");
         }
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.baseline_arrow_back_ios_new_24);
@@ -145,18 +148,18 @@ public class BecomeATutor1 extends AppCompatActivity {
             if(checkFlag.equals("become")) {
                 Intent s_intent = new Intent(BecomeATutor1.this, BecomeATutor2.class);
                 s_intent.putExtra("KEY_VALUE", selectedItem);
+                s_intent.putExtra("ACTIVITY", "Become");
                 startActivity(s_intent);
                 finish();
                 return true;
-            } else if (checkFlag.equals("hire")) {
+            }
+            else{
                 Intent s_intent = new Intent(BecomeATutor1.this, HireaTutor2.class);
-                s_intent.putExtra("subject", selectedItem);
+                s_intent.putExtra("KEY_VALUE", selectedItem);
                 startActivity(s_intent);
                 finish();
                 return true;
-            }else
-            {
-                return false;
+
             }
 
         }

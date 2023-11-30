@@ -17,6 +17,7 @@ public class Dashboard extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     Button signoutbutton, reviewatutor, categories,becomeatutor,hireatutor;
     ImageButton imageButton7;
+    ImageButton ProfileButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,12 +31,13 @@ public class Dashboard extends AppCompatActivity {
         becomeatutor = findViewById(R.id.becomeatutor);
         hireatutor = findViewById(R.id.hireatutor);
         imageButton7 = findViewById(R.id.imageButton7);
+        ProfileButton = findViewById(R.id.profilebtn);
 
         becomeatutor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Dashboard.this, BecomeATutor1.class);
-                intent.putExtra("flags", "become");
+                intent.putExtra("flags","become");
                 startActivity(intent);
                 finish();
             }
@@ -50,12 +52,27 @@ public class Dashboard extends AppCompatActivity {
                 Toast.makeText(Dashboard.this, "Successful logout", Toast.LENGTH_SHORT).show();
             }
         });
-
+        categories.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Dashboard.this, TutoringCategoriesForTutors.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         hireatutor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Dashboard.this, BecomeATutor1.class);
-                intent.putExtra("flags", "hire");
+                intent.putExtra("flags","hire");
+                startActivity(intent);
+                finish();
+            }
+        });
+        ProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Dashboard.this, BecomeATutor1.class);
                 startActivity(intent);
                 finish();
             }

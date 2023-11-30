@@ -71,7 +71,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="Submit"
-        android:backgroundTint="#55a4b1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/checkBox"
         app:layout_constraintStart_toStartOf="@+id/checkBox"

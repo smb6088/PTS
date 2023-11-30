@@ -27,7 +27,6 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class Registration extends AppCompatActivity {
@@ -42,8 +41,6 @@ public class Registration extends AppCompatActivity {
     FirebaseDatabase database;
     ProgressBar progressBar;
     DatabaseReference reference;
-
-
 
     static final String TAG = "Registration";
 
@@ -63,7 +60,6 @@ public class Registration extends AppCompatActivity {
         editTextPasswordHint = findViewById(R.id.editTextPasswordHint);
         buttonCompleteRegistration = findViewById(R.id.buttonCompleteRegistration);
 
-
         buttonCompleteRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,7 +70,6 @@ public class Registration extends AppCompatActivity {
                 String EmailAddress = editTextEmailAddress.getText().toString();
                 String Phone = editTextPhone.getText().toString();
                 String Password = editTextPassword.getText().toString();
-                ArrayList<String> prevtutor = new ArrayList<>();
                 String ConfirmPassword = editTextConfirmPassword.getText().toString();
                 String PasswordHint = editTextPasswordHint.getText().toString();
 
@@ -126,14 +121,14 @@ public class Registration extends AppCompatActivity {
                     editTextFirstName.requestFocus();
                 }else{
                     progressBar.setVisibility(View.VISIBLE);
-                    registeruser(FirstName,LastName,EmailAddress,Phone,Password,ConfirmPassword,PasswordHint,prevtutor);
+                    registeruser(FirstName,LastName,EmailAddress,Phone,Password,ConfirmPassword,PasswordHint);
                 }
 
 
             }
         });
     }
-    private void registeruser(String FirstName,String LastName,String EmailAddress,String Phone,String Password,String ConfirmPassword,String PasswordHint, ArrayList prevtutor){
+    private void registeruser(String FirstName,String LastName,String EmailAddress,String Phone,String Password,String ConfirmPassword,String PasswordHint){
         FirebaseAuth auth = FirebaseAuth.getInstance();
         auth.createUserWithEmailAndPassword(EmailAddress,Password).addOnCompleteListener(Registration.this,
                 new OnCompleteListener<AuthResult>() {
@@ -144,9 +139,8 @@ public class Registration extends AppCompatActivity {
                             FirebaseUser firebaseUser = auth.getCurrentUser();
                             //UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(FirstName).build();
                             //firebaseUser.updateProfile(profileChangeRequest);
-                            ReadWriteUserDetails writeUserDetails = new ReadWriteUserDetails(FirstName,LastName,EmailAddress,Phone,Password,PasswordHint,prevtutor);
+                            ReadWriteUserDetails writeUserDetails = new ReadWriteUserDetails(FirstName,LastName,EmailAddress,Phone,Password,PasswordHint);
                             DatabaseReference referenceProfile = FirebaseDatabase.getInstance().getReference("Registered Users");
-                            referenceProfile.child(firebaseUser.getUid()).setValue(prevtutor);
                             referenceProfile.child(firebaseUser.getUid()).setValue(writeUserDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
@@ -155,7 +149,6 @@ public class Registration extends AppCompatActivity {
                                         Intent intent = new Intent(Registration.this, Dashboard.class);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK
                                                 | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        intent.putExtra("name", FirstName);
                                         startActivity(intent);
                                         finish();
                                     } else {
@@ -164,7 +157,6 @@ public class Registration extends AppCompatActivity {
                                     }
                                     progressBar.setVisibility(View.GONE);
                                 }
-
                             });
                         }else{
                             try {

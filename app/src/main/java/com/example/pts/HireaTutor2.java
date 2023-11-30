@@ -1,93 +1,90 @@
 package com.example.pts;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.annotation.RequiresPermission;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
+import android.widget.Toast;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
-
 
 public class HireaTutor2 extends AppCompatActivity {
 
-    //ArrayList<tutorsearch_model> tutorsearchModels = new ArrayList<String>();
-    //ArrayAdapter arrAdapter;
-//    String[] tutorKey;
-//    String[] tutorName;
-    String[] names;
-    String[] rating;
-    String[] location;
-    Button Pay;
     String selectedCategory;
-
-    ArrayAdapter arrAdapter;
-
-    ListView tutorlist;
-    RecyclerView recyclerView;
-    ArrayList<String> list;
-    DatabaseReference databaseReference;
-    TP_recyclerviewadapter adapter;
-
+    String Name;
+    String Rating;
+    String Location;
+    ArrayList<TutorSearchModel> tutorSearchModels = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hirea_tutor2);
-        Intent r_intent = getIntent();
-        Pay = findViewById(R.id.payment);
-        tutorlist = findViewById(R.id.listtutor);
-        list = new ArrayList<>();
-        arrAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice,list);
-        tutorlist.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        tutorlist.setAdapter(arrAdapter);
 
-        selectedCategory = r_intent.getStringExtra("subject");
+        Intent intent = getIntent();
+        selectedCategory = intent.getStringExtra("KEY_VALUE");
+        Toast.makeText(HireaTutor2.this, "Hiring for " + selectedCategory,Toast.LENGTH_SHORT).show();
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("ListofTutor");
-        String id = databaseReference.getKey();
-//        list = new ArrayList<>();
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        adapter = new TP_recyclerviewadapter(this, list);
-        ArrayList<String> tutorData = new ArrayList<>();
-        System.out.println(selectedCategory);
 
-//        .orderByChild("subject").equalTo(selectedCategory);
-        databaseReference.orderByChild("subject").equalTo(selectedCategory).addValueEventListener(new ValueEventListener() {
+        RecyclerView rv = findViewById(R.id.tutorrecycler);
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Tutor Details/ListofTutors");
+        ref.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot dataSnapshot: snapshot.getChildren()){
+            public void onDataChange(@NonNull DataSnapshot snapshot)
+            {
+                for(DataSnapshot childSnap : snapshot.getChildren())
+                {
+                    ArrayList<String> list = new ArrayList<>();
+                    for(DataSnapshot childSnap2 : childSnap.getChildren())
+                    {
+                        list.add(childSnap2.getValue().toString());
+                    }
 
-                       String tutorKey = dataSnapshot.getKey();
-                       System.out.println(tutorKey);
-                       String tutorName = dataSnapshot.child("location").getValue(String.class);
-                       System.out.println(tutorName);
+                    if(list.get(2).equals(selectedCategory))
+                    {
 
-                    String tutorInfo = "Key: " + tutorKey + ", Name: " + tutorName;
-                    tutorData.add(tutorInfo);
+                        DatabaseReference reg_ref = FirebaseDatabase.getInstance().getReference("Registered Users/"+list.get(3));
+                        reg_ref.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot usersnapshot)
+                            {
+                                ArrayList<String> user_list = new ArrayList<>();
+                                for(DataSnapshot userchildsnap : usersnapshot.getChildren())
+                                {
+                                    user_list.add(userchildsnap.getValue().toString());
+                                }
+                                tutorSearchModels.add(new TutorSearchModel(user_list.get(1)+user_list.get(2),user_list.get(7),user_list.get(3)));
 
-                    System.out.println(tutorData);
+                            }
 
-//                    list.add(tutorsearchModel);
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                        //tutorSearchModels.add(new TutorSearchModel("hello","hello","hello"));
+
+                    }
+
+
+
+
+
+
+
+
                 }
-//                adapter.notifyDataSetChanged();
-//                TP_recyclerviewadapter temp = new TP_recyclerviewadapter(HireaTutor2.this,list);
-                //recyclerView.setLayoutManager(new LinearLayoutManager(HireaTutor2.this));
-//                recyclerView.setAdapter(adapter);
-//                adapter = new TP_recyclerviewadapter(HireaTutor2.this, list);
 
             }
 
@@ -95,18 +92,17 @@ public class HireaTutor2 extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-
         });
 
+        rv_tutor_adapter adapter = new rv_tutor_adapter(this, tutorSearchModels);
+        rv.setAdapter(adapter);
+        rv.setLayoutManager(new LinearLayoutManager(this));
 
-        Pay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HireaTutor2.this,Payments.class);
-//                String name = intent.putExtra("nameid", )
-                startActivity(intent);
-                finish();
-            }
-        });
+
+
+
+        //String Names[] = {}
+        //String Ratings[] =
+
     }
 }
