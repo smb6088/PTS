@@ -14,11 +14,13 @@ import java.util.ArrayList;
 
 public class rv_tutor_adapter extends RecyclerView.Adapter<rv_tutor_adapter.MyViewHolder>
 {
+    private final rv_interface Rv_interface;
     Context context;
     ArrayList<TutorSearchModel> tutorSearchModels;
-    public rv_tutor_adapter(Context context, ArrayList<TutorSearchModel> tutorSearchModels)
+    public rv_tutor_adapter(Context context, ArrayList<TutorSearchModel> tutorSearchModels, rv_interface Rv_interface)
     {
         this.context = context;
+        this.Rv_interface = Rv_interface;
         this.tutorSearchModels = tutorSearchModels;
     }
 
@@ -32,7 +34,7 @@ public class rv_tutor_adapter extends RecyclerView.Adapter<rv_tutor_adapter.MyVi
 
 
 
-        return new rv_tutor_adapter.MyViewHolder(view);
+        return new rv_tutor_adapter.MyViewHolder(view, Rv_interface);
     }
 
     @Override
@@ -58,13 +60,29 @@ public class rv_tutor_adapter extends RecyclerView.Adapter<rv_tutor_adapter.MyVi
         TextView Rating;
         TextView Location;
 
-        public MyViewHolder(@NonNull View itemView)
+        public MyViewHolder(@NonNull View itemView, rv_interface Rv_interface)
         {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageSearchProfPic);
             Name = itemView.findViewById(R.id.textSearchName);
             Rating = itemView.findViewById(R.id.textSearchRating);
             Location = itemView.findViewById(R.id.textSearchLocation);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+                    if(Rv_interface!=null)
+                    {
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION)
+                        {
+                            Rv_interface.onClick(position);
+                        }
+                    }
+
+                }
+            });
         }
     }
 }
