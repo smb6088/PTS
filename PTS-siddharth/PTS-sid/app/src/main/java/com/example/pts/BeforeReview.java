@@ -10,14 +10,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,8 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class BecomeATutor1 extends AppCompatActivity {
-
+public class BeforeReview extends AppCompatActivity {
 
     private ListView listviewCategories;
     ArrayList<String> list;
@@ -35,30 +33,20 @@ public class BecomeATutor1 extends AppCompatActivity {
     Button buttonNext;
     //ImageButton imageButtonNext;
     String selectedItem;
-    String checkFlag;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_become_atutor1);
+        setContentView(R.layout.activity_before_review);
 
         Toolbar top = findViewById(R.id.xml_top);
-
-        Intent intent = getIntent();
-        checkFlag = intent.getStringExtra("flags");
-
         setSupportActionBar(top);
         ActionBar actionBar = getSupportActionBar();
-        if(checkFlag.equals("become")) {
-            actionBar.setTitle("Select Category");
-        }
-        else {
-            actionBar.setTitle("Hire in Category");
-        }
+
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.baseline_arrow_back_ios_new_24);
 
 
-        listviewCategories = findViewById(R.id.listviewCategories);
+        listviewCategories = findViewById(R.id.listviewTutors);
         list = new ArrayList<>();
         arrAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, list);
         listviewCategories.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
@@ -67,7 +55,8 @@ public class BecomeATutor1 extends AppCompatActivity {
 
 
 
-        DatabaseReference dataRef = FirebaseDatabase.getInstance().getReference().child("Tutoring Categories");
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
+        DatabaseReference dataRef = FirebaseDatabase.getInstance().getReference("Registered Users/"+uid+"/prevHiredTutors");
         dataRef.addValueEventListener(new ValueEventListener()
         {
 
@@ -76,10 +65,36 @@ public class BecomeATutor1 extends AppCompatActivity {
             {
                 for(DataSnapshot snap_shot : snapshot.getChildren())
                 {
-                    if(list.contains(snap_shot.getKey().toString())==false)
-                    {
-                        list.add(snap_shot.getKey().toString());
-                    }
+
+                    String tutorID = snap_shot.getKey().toString();
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Registered Users/"+tutorID);
+                    ref.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dsnapshot) {
+                            String name="";
+                            for(DataSnapshot child: dsnapshot.getChildren())
+                            {
+                                if(child.getKey().toString().equals("FirstName"))
+                                {
+                                    name += child.getValue().toString();
+                                }
+                                if(child.getKey().toString().equals("LastName"))
+                                {
+                                    name += child.getValue().toString();
+                                }
+                                if(list.contains(name)==false)
+                                {
+                                    list.add(name);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
                 }
                 arrAdapter.notifyDataSetChanged();
             }
@@ -96,8 +111,8 @@ public class BecomeATutor1 extends AppCompatActivity {
                 String toast_mssg = "Selected ";
                 selectedItem = (parent.getItemAtPosition(position)).toString();
                 toast_mssg += selectedItem;
-                toast_mssg += " as tutoring category";
-                Toast.makeText(BecomeATutor1.this, toast_mssg, Toast.LENGTH_SHORT).show();
+                toast_mssg += " as tutor to review";
+                Toast.makeText(BeforeReview.this, toast_mssg, Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -124,9 +139,7 @@ public class BecomeATutor1 extends AppCompatActivity {
                 finish();
             }
         });*/
-
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -138,29 +151,23 @@ public class BecomeATutor1 extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId()==android.R.id.home)
         {
-            Intent intent = new Intent(BecomeATutor1.this, Dashboard.class);
+            Intent intent = new Intent(BeforeReview.this, Dashboard.class);
             startActivity(intent);
             finish();
             return true;
         }
         else if(item.getItemId()==R.id.check)
         {
-            if(checkFlag.equals("become")) {
-                Intent s_intent = new Intent(BecomeATutor1.this, BecomeATutor2.class);
-                s_intent.putExtra("KEY_VALUE", selectedItem);
-                s_intent.putExtra("ACTIVITY", "Become");
-                startActivity(s_intent);
-                //finish();
-                return true;
-            }
-            else{
-                Intent s_intent = new Intent(BecomeATutor1.this, HireaTutor2.class);
+
+
+
+                Intent s_intent = new Intent(BeforeReview.this, Review.class);
                 s_intent.putExtra("KEY_VALUE", selectedItem);
                 startActivity(s_intent);
                 //finish();
                 return true;
 
-            }
+
 
         }
         else

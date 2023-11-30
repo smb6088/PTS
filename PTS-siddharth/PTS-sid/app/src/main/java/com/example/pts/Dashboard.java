@@ -37,7 +37,7 @@ public class Dashboard extends AppCompatActivity {
                 Intent intent = new Intent(Dashboard.this, BecomeATutor1.class);
                 intent.putExtra("flags","become");
                 startActivity(intent);
-                finish();
+                //finish();
             }
         });
         signoutbutton.setOnClickListener(new View.OnClickListener() {
@@ -55,7 +55,7 @@ public class Dashboard extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Dashboard.this, TutoringCategoriesForTutors.class);
                 startActivity(intent);
-                finish();
+                //finish();
             }
         });
         hireatutor.setOnClickListener(new View.OnClickListener() {
@@ -64,7 +64,14 @@ public class Dashboard extends AppCompatActivity {
                 Intent intent = new Intent(Dashboard.this, BecomeATutor1.class);
                 intent.putExtra("flags","hire");
                 startActivity(intent);
-                finish();
+                //finish();
+            }
+        });
+        reviewatutor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Dashboard.this,BeforeReview.class);
+                startActivity(intent);
             }
         });
     }

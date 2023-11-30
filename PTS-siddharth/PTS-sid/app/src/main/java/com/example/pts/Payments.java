@@ -22,6 +22,7 @@ public class Payments extends AppCompatActivity {
     ArrayList<String> list;
 
     String selectedItem;
+    String tutorID;
 
     ArrayAdapter arrAdapter;
     @SuppressLint("MissingInflatedId")
@@ -38,6 +39,7 @@ public class Payments extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.baseline_arrow_back_ios_new_24);
         Intent intent = getIntent();
+        tutorID = intent.getStringExtra("TUTORID");
 
 
         listviewCategories = findViewById(R.id.listviewCategories);
@@ -78,14 +80,16 @@ public class Payments extends AppCompatActivity {
             if (selectedItem.equals("Cash")) {
                 Intent s_intent = new Intent(Payments.this, paymentscash.class);
                 s_intent.putExtra("mode", selectedItem);
+                s_intent.putExtra("TUTORID", tutorID);
                 startActivity(s_intent);
-                finish();
+                //finish();
                 return true;
             } else if (selectedItem.equals("Credit/Debit card")) {
                 Intent s_intent = new Intent(Payments.this, Paymentscredit.class);
                 s_intent.putExtra("mode", selectedItem);
+                s_intent.putExtra("TUTORID", tutorID);
                 startActivity(s_intent);
-                finish();
+                //finish();
                 return true;
             }
             return false;

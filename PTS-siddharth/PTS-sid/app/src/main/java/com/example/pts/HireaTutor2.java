@@ -129,7 +129,7 @@ public class HireaTutor2 extends AppCompatActivity implements rv_interface {
         intent.putExtra("TUTORID",TutorID.get(position));
 
         startActivity(intent);
-        finish();
+        //finish();
 
 
 

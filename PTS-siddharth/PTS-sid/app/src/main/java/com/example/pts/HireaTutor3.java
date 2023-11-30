@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class HireaTutor3 extends AppCompatActivity {
@@ -28,6 +30,8 @@ public class HireaTutor3 extends AppCompatActivity {
     TextView tutorGets;
     TextView totalPrice;
     TextView teachingLabel;
+
+    Button buttonPay;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +69,18 @@ public class HireaTutor3 extends AppCompatActivity {
         tutorGets.setText(String.valueOf(Integer.parseInt(Price)*0.8));
         appGets.setText(String.valueOf(Integer.parseInt(Price)*0.2));
 
+        buttonPay = findViewById(R.id.buttonPay);
+        buttonPay.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(HireaTutor3.this,Payments.class);
+                intent.putExtra("TUTORID",TutorID);
+                startActivity(intent);
+
+            }
+        });
 
     }
 }
