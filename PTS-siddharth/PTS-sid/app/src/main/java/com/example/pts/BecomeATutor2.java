@@ -40,6 +40,7 @@ public class BecomeATutor2 extends AppCompatActivity {
     Button buttonSubmit;
     DatabaseReference dataRef;
     TextView charCount;
+    String checkFlag;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +57,7 @@ public class BecomeATutor2 extends AppCompatActivity {
 
         Intent r_intent = getIntent();
         selectedCategory = r_intent.getStringExtra("KEY_VALUE");
+        checkFlag = r_intent.getStringExtra("ACTIVITY");
 
         editTextPrice = findViewById(R.id.editTextPrice);
         editTextLocation = findViewById(R.id.editTextLocation);
@@ -117,6 +119,9 @@ public class BecomeATutor2 extends AppCompatActivity {
                 String price = editTextPrice.getText().toString();
                 String location = editTextLocation.getText().toString();
                 String bio = editTextBio.getText().toString();
+                FirebaseAuth auth = FirebaseAuth.getInstance();
+                FirebaseUser firebaseUser = auth.getCurrentUser();
+                String tutorid = firebaseUser.getUid().toString();
 
                 if(TextUtils.isEmpty(price))
                 {
@@ -144,6 +149,7 @@ public class BecomeATutor2 extends AppCompatActivity {
                     String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     dataRef = FirebaseDatabase.getInstance().getReference().child("Registered Users");
                     dataRef = dataRef.child(userID);
+                    /*
                     Map<String, Object> tutorDetails = new HashMap<String, Object>();
 
                     tutorDetails.put("Price", price);
@@ -153,7 +159,20 @@ public class BecomeATutor2 extends AppCompatActivity {
                     tutorDetails.put("Category", selectedCategory);
 
                     dataRef.child("Tutor Details").push().updateChildren(tutorDetails);
+                    */
+
                     dataRef.child("isATutor").setValue(true);
+                    dataRef.child("Location").setValue(location);
+
+                    addtutor(tutorid,price,bio,selectedCategory);
+
+                    if(checkFlag.equals("Categories")) {
+                        DatabaseReference dataRefCategories = FirebaseDatabase.getInstance().getReference().child("Tutoring Categories");
+                        Map<String, Object> addCategory = new HashMap<>();
+                        addCategory.put(selectedCategory, "");
+                        dataRefCategories.updateChildren(addCategory);
+                    }
+
 
                     Intent intent = new Intent(BecomeATutor2.this, Dashboard.class);
                     startActivity(intent);
@@ -182,5 +201,23 @@ public class BecomeATutor2 extends AppCompatActivity {
         {
             return super.onOptionsItemSelected(item);
         }
+    }
+    public void addtutor( String tutorid,String price,String bio, String subject)
+    {
+
+        //UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(FirstName).build();
+        //firebaseUser.updateProfile(profileChangeRequest);
+        tutorDetails tutordetails = new tutorDetails(tutorid, price,bio, subject);
+        DatabaseReference referenceProfile = FirebaseDatabase.getInstance().getReference("Tutor Details");
+        String id = referenceProfile.push().getKey();
+        referenceProfile.child("ListofTutors").child(id).setValue(tutordetails).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Toast.makeText(BecomeATutor2.this, "You became a tutor", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(BecomeATutor2.this, Dashboard.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 }

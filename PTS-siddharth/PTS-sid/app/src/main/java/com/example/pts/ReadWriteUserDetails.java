@@ -1,9 +1,13 @@
 package com.example.pts;
 
+import java.util.ArrayList;
+
 public class ReadWriteUserDetails {
     public String FirstName,LastName,EmailAddress,Phone,Password,PasswordHint;
     public boolean isATutor;
     public int Rating;
+    public String Location;
+    public ArrayList<String> prevHiredTutors;
 
 
     public ReadWriteUserDetails(String FirstName, String LastName, String EmailAddress, String Phone, String Password, String PasswordHint){
@@ -15,6 +19,8 @@ public class ReadWriteUserDetails {
         this.PasswordHint = PasswordHint;
         isATutor = false;
         Rating = 0;
+        prevHiredTutors = new ArrayList<String>();
+        Location = null;
     }
 
 }

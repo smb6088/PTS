@@ -35,6 +35,7 @@ public class Dashboard extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Dashboard.this, BecomeATutor1.class);
+                intent.putExtra("flags","become");
                 startActivity(intent);
                 finish();
             }
@@ -47,6 +48,23 @@ public class Dashboard extends AppCompatActivity {
                 startActivity(intent);
                 finish();
                 Toast.makeText(Dashboard.this, "Successful logout", Toast.LENGTH_SHORT).show();
+            }
+        });
+        categories.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Dashboard.this, TutoringCategoriesForTutors.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        hireatutor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Dashboard.this, BecomeATutor1.class);
+                intent.putExtra("flags","hire");
+                startActivity(intent);
+                finish();
             }
         });
     }
