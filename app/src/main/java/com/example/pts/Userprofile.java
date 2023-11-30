@@ -21,7 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class Userprofile extends AppCompatActivity {
 
-    TextView Fname,Lname, Email,Phone,Teaching;
+    TextView Fname,Lname, Email,Phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,6 @@ public class Userprofile extends AppCompatActivity {
         Lname = findViewById(R.id.lastname);
         Email = findViewById(R.id.email);
         Phone = findViewById(R.id.phone);
-        Teaching = findViewById(R.id.teaching);
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = auth.getCurrentUser();
         DatabaseReference referenceProfile = FirebaseDatabase.getInstance().getReference("Registered Users");
